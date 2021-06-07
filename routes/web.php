@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 
+use function PHPUnit\Framework\fileExists;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,13 +17,25 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
 	return view('posts');
-	// This is actually:
-	// return view('welcome.blade.php');
-	// but the .blade.php is not required for this function.
 });
 
-Route::get('post', function () {
-	return view('post');
+Route::get('post/{post}', function ($slug) {
+	$path = __DIR__ . "/../resources/posts/{$slug}.html";
+
+	if (!file_exists($path)) {
+		return redirect('/');
+		// redirect literally redirects the page if the $path does not exist.
+
+		// abort(404);
+		// abort(404) returns an error screen with 404 not found
+
+		// ddd('file does not exist');
+		// ddd returns the laravel error screen with the inputted error message.
+	}
+
+	return view('post', [
+		'post' => file_get_contents($path)
+	]);
 });
 
 
