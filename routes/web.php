@@ -24,20 +24,32 @@ Route::get('post/{post}', function ($slug) {
 
 	if (!file_exists($path)) {
 		return redirect('/');
-		// redirect literally redirects the page if the $path does not exist.
-
-		// abort(404);
-		// abort(404) returns an error screen with 404 not found
-
-		// ddd('file does not exist');
-		// ddd returns the laravel error screen with the inputted error message.
 	}
 
 	return view('post', [
 		'post' => file_get_contents($path)
 	]);
-});
+})->where('post', '[A-z_\-]+');
 
+/* 
+	Episode 9 - Wildcard constraints
+	There are other helper functions in laravel
+	->whereAlpha();
+	->whereAlphanumeric();
+	->whereNumber();
+	These do not take the regex second parameter
+*/
+
+/*
+	Episode 8 - Store blog posts as HTML files
+	redirect literally redirects the page if the $path does not exist.
+
+	abort(404);
+	abort(404) returns an error screen with 404 not found
+
+	ddd('file does not exist');
+	ddd returns the laravel error screen with the inputted error message.
+*/
 
 /*
 Episode 5 - How laravel loads a view

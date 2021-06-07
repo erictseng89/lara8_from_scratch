@@ -11,10 +11,7 @@
 	<title>My Blog</title>
 </head>
 <body>
-	<article>
-		<a href="/post"><h1>My first post</h1></a>
-		<?= $post ?>
-	</article>
+	<?= $post ?>
 
 	<a href="/">Go back</a>
 </body>
