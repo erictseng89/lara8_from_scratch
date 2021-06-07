@@ -21,9 +21,11 @@ Route::get('/', function () {
 });
 
 /*
+Episode 5 - How laravel loads a view
 Can also return json objects
 
 Route::get('/', function() {
 	$json = ['foo' => 'bar'];
 	return $json;
 });
+*/
