@@ -20,14 +20,18 @@ Route::get('/', function () {
 });
 
 Route::get('post/{post}', function ($slug) {
-	$path = __DIR__ . "/../resources/posts/{$slug}.html";
-
-	if (!file_exists($path)) {
+	if (!file_exists($path = __DIR__ . "/../resources/posts/{$slug}.html")) {
 		return redirect('/');
 	}
 
+	$post = cache()->remember(
+		"post.{$slug}",
+		now()->addHour(),
+		fn () => file_get_contents($path)
+	);
+
 	return view('post', [
-		'post' => file_get_contents($path)
+		'post' => $post
 	]);
 })->where('post', '[A-z_\-]+');
 
