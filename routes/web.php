@@ -14,5 +14,16 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+	return view('welcome');
+	// This is actually:
+	// return view('welcome.blade.php');
+	// but the .blade.php is not required for this function.
+});
+
+/*
+Can also return json objects
+
+Route::get('/', function() {
+	$json = ['foo' => 'bar'];
+	return $json;
 });
