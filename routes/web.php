@@ -14,11 +14,16 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-	return view('welcome');
+	return view('posts');
 	// This is actually:
 	// return view('welcome.blade.php');
 	// but the .blade.php is not required for this function.
 });
+
+Route::get('post', function () {
+	return view('post');
+});
+
 
 /*
 Episode 5 - How laravel loads a view
