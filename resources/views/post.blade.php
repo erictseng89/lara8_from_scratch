@@ -8,12 +8,11 @@
 	{{-- This link will refer to the file in the /public folder. --}}
 	<link rel="stylesheet" href="/app.css">
 
-	<title><?= $post->title ?></title>
+	<title>{{ $post->title }}</title>
 </head>
 <body>
-	<h1><?= $post->title ?></h1>
-	<p><?= $post->body ?></p>
-
+	<h1>{{ $post->title }}</h1>
+	{!! $post->body !!}	
 	<a href="/">Go back</a>
 </body>
 </html>
