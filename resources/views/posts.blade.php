@@ -8,7 +8,7 @@
         In
         <a href="/categories/{{ $post->category->slug }}">{{ $post->category->name }}</a>,
         By
-        <a href="/user/{{ $post->user->name }}">{{ $post->user->name }}</a>
+        <a href="/authors/{{ $post->author->username }}">{{ $post->author->name }}</a>
       </h3>
       {{ $post->excerpt }}
     </article>

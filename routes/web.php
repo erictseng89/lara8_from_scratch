@@ -21,13 +21,13 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
 
 	return view('posts', [
-		'posts' => Post::with('user', 'category')->get()
+		'posts' => Post::latest()->with('author', 'category')->get()
 	]);
 });
 
-Route::get('/user/{user:name}', function (User $user) {
+Route::get('/authors/{author:username}', function (User $author) {
 	return view('posts', [
-		'posts' => $user->posts
+		'posts' => $author->posts
 	]);
 });
 
