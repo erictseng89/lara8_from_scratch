@@ -1,7 +1,9 @@
 <?php
 
 use App\Models\Post;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
+use Spatie\YamlFrontMatter\YamlFrontMatter;
 
 use function PHPUnit\Framework\fileExists;
 
@@ -17,16 +19,55 @@ use function PHPUnit\Framework\fileExists;
 */
 
 Route::get('/', function () {
+	// return view('posts', [
+	// 	'posts' => Post::all()
+	// ]);
+	/* $document = YamlFrontMatter::parseFile(
+		resource_path('posts/my-first-post.html')
+	);
+
+	ddd($document); */
+
 	return view('posts', [
 		'posts' => Post::all()
 	]);
 });
 
 Route::get('/post/{post}', function ($slug) {
+	// ddd(Post::find($slug));
 	return view('post', [
 		'post' => Post::find($slug)
 	]);
 });
+
+/*
+	Episode 12
+
+	$post = array_map(function ($file) {
+
+		$document = YamlFrontMatter::parseFile($file);
+
+		return new Post(
+			$document->title,
+			$document->slug,
+			$document->date,
+			$document->excerpt,
+			$document->body()
+		);
+	}, $files);
+	
+	foreach ($files as $file) {
+		$document = YamlFrontMatter::parseFile($file);
+
+		$post[] = new Post(
+			$document->title,
+			$document->slug,
+			$document->date,
+			$document->excerpt,
+			$document->body()
+		);
+	} 
+*/
 
 /* 
 	Episode 11

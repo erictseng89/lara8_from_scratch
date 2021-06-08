@@ -8,10 +8,11 @@
 	{{-- This link will refer to the file in the /public folder. --}}
 	<link rel="stylesheet" href="/app.css">
 
-	<title>My Blog</title>
+	<title><?= $post->title ?></title>
 </head>
 <body>
-	<?= $post ?>
+	<h1><?= $post->title ?></h1>
+	<p><?= $post->body ?></p>
 
 	<a href="/">Go back</a>
 </body>
