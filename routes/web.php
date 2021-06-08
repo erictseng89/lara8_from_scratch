@@ -1,11 +1,10 @@
 <?php
 
+use App\Models\Category;
 use App\Models\Post;
-use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
-use Spatie\YamlFrontMatter\YamlFrontMatter;
 
-use function PHPUnit\Framework\fileExists;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,8 +18,17 @@ use function PHPUnit\Framework\fileExists;
 */
 
 Route::get('/', function () {
+	// DB::listen(fn ($query) => logger($query->sql));
+
 	return view('posts', [
-		'posts' => Post::all()
+		'posts' => Post::with('category')->get()
+	]);
+});
+
+
+Route::get('/categories/{category:slug}', function (Category $category) {
+	return view('posts', [
+		'posts' => $category->posts
 	]);
 });
 
