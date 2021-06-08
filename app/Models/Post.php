@@ -18,6 +18,8 @@ class Post extends Model
 		'user_id'
 	];
 
+	protected $with = ['category', 'author'];
+
 	public function category()
 	{
 		return $this->belongsTo(Category::class);
