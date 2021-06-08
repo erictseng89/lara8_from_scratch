@@ -19,23 +19,14 @@ use function PHPUnit\Framework\fileExists;
 */
 
 Route::get('/', function () {
-	// return view('posts', [
-	// 	'posts' => Post::all()
-	// ]);
-	/* $document = YamlFrontMatter::parseFile(
-		resource_path('posts/my-first-post.html')
-	);
-
-	ddd($document); */
-
 	return view('posts', [
 		'posts' => Post::all()
 	]);
 });
 
-Route::get('/post/{post}', function ($id) {
+Route::get('/post/{post:slug}', function (Post $post) {
 	return view('post', [
-		'post' => Post::findOrFail($id)
+		'post' => $post
 	]);
 });
 
