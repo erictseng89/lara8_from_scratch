@@ -58,9 +58,11 @@
     </div> --}}
 
     <!-- Search -->
+    {{-- The main page has a form which sends a GET request. The method is listed as "GET", and the name of the input is "search", which will be what shows up in the uri. We can use the function
+		'request()' to obtain the value of 'search'. The value="" can be the value of the search term. --}}
     <div class="relative flex lg:inline-flex items-center bg-gray-100 rounded-xl px-3 py-2">
       <form method="GET" action="#">
-        <input type="text" name="search" placeholder="Find something"
+        <input type="text" name="search" placeholder="Find something" value=" {{ request('search') }}"
           class="bg-transparent placeholder-black font-semibold text-sm">
       </form>
     </div>

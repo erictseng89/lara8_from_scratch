@@ -18,9 +18,24 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
+	// We use the request method for finding the value of 'search'.
+	// dd(request('search'));
 
+	// Now we want to return the post collection filtered. So we first call the collection, then we can filter it. The get() method should be the final method of the query request and should not be used until the final statement. Original
+	// $post = Post::latest()->get();
+
+	$post = Post::latest();
+
+	// The where() function means to use the "WHERE" operator in SQL.
+	// The orWhere() function means either OR and.
+
+	if (request('search')) {
+		$post
+			->where('title', 'like', '%' . request('search') . '%')
+			->orWhere('body', 'like', '%' . request('search') . '%');
+	}
 	return view('posts', [
-		'posts' => Post::latest()->get(),
+		'posts' => $post->get(),
 		'categories' => Category::all()
 	]);
 })->name('home');
