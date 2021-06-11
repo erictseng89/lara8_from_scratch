@@ -1,6 +1,6 @@
 @props(['author'])
 
-<a href="/authors/{{ $author->username }}">
+<a href="?author={{ $author->username }}">
   <div class="flex items-center text-sm">
     <img src="/images/lary-avatar.svg" alt="Lary avatar">
     <div class="ml-3">

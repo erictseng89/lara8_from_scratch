@@ -8,32 +8,8 @@
 
     <div class="relative flex lg:inline-flex bg-gray-100 rounded-xl">
       {{-- Create a drop down list with alphine.js, editing with tailwind --}}
-      <x-dropdown-menu>
-        <x-slot name="trigger">
-          <button class="py-2 pl-3 pr-9d text-left text-sm font-semibold lg:w-32 lg:inline-flex flex">
-            {{ isset($currentCategory) ? ucwords($currentCategory->name) : 'Category' }}
-            <x-icons name='down-arrow' class="absolute pointer-events-none" style="right:12px" />
-          </button>
-        </x-slot>
-
-        <x-dropdown-item href="/" :active="request()->routeIs('home')">
-          All
-        </x-dropdown-item>
-        @foreach ($categories as $category)
-          <x-dropdown-item href="/categories/{{ $category->slug }}"
-            :active="isset($currentCategory) && $currentCategory->is($category)">
-            {{-- Alternatively:
-							:active="request()->is('*' . $category->slug)"
-							This checks the uri to make sure its the same --}}
-            {{ ucwords($category->name) }}
-          </x-dropdown-item>
-
-          {{-- <a href="/categories/{{ $category->slug }}" class="block text-left px-3 text-sm leading-6 hover:bg-blue-500 focus:bg-blue-500 hover:text-white focus:text-white 
-    {{ isset($currentCategory) && $currentCategory->is($category) ? '' : '' }}">
-            {{ ucwords($category->name) }}</a> --}}
-        @endforeach
-
-      </x-dropdown-menu>
+			{{-- {{ ddd($currentCategory) }} --}}
+			<x-category-dropdown />
     </div>
 
     <!-- Other Filters -->
@@ -55,14 +31,14 @@
           <path fill="#222" d="M13.854 7.224l-3.847 3.856 3.847 3.856-1.184 1.184-5.04-5.04 5.04-5.04z"></path>
         </g>
       </svg>
-    </div> --}}
+    {{-- </div> --}} 
 
     <!-- Search -->
     {{-- The main page has a form which sends a GET request. The method is listed as "GET", and the name of the input is "search", which will be what shows up in the uri. We can use the function
 		'request()' to obtain the value of 'search'. The value="" can be the value of the search term. --}}
     <div class="relative flex lg:inline-flex items-center bg-gray-100 rounded-xl px-3 py-2">
-      <form method="GET" action="#">
-        <input type="text" name="search" placeholder="Find something" value=" {{ request('search') }}"
+      <form method="GET" action="">
+        <input type="text" name="search" placeholder="Find something" value="{{ request('search') }}"
           class="bg-transparent placeholder-black font-semibold text-sm">
       </form>
     </div>
