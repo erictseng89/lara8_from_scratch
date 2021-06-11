@@ -11,8 +11,17 @@
     All
   </x-dropdown-item>
 
+	{{-- 
+		Merge http queries together.
+		If we already have a query string in the uri, we can merge it using
+		http_build_query
+		This global function allows you to change a key/value pair into a valid
+		query string. 
+			
+			['name' = 'john']			name=john
+		--}}
   @foreach ($categories as $category)
-    <x-dropdown-item href="/?category={{ $category->slug }}"
+    <x-dropdown-item href="/?category={{ $category->slug }}&{{ http_build_query(request()->except('category')) }}"
       :active='request()->is("/category/{{ $category->slug }}")'>
       {{ ucwords($category->name) }}
     </x-dropdown-item>

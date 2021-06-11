@@ -72,17 +72,29 @@ class Post extends Model
   public function scopefilter($query, array $filters)
   {
     $query->when($filters['search'] ?? false, fn($query, $search) =>
-      $query
-        ->where('title', 'like', '%' . $search . '%')
-        ->orWhere('body', 'like', '%' . $search . '%'));
+      $query->where(fn($query) => // This section adds "closure" to the SQL query.
+        $query->where('title', 'like', '%' . $search . '%')
+          ->orwhere('body', 'like', '%' . $search . '%')
+      )
+    );
+    // This was the original without the closure.
+    // This is resulted in queries that resulted in a OR capacity, rather than AND
+    // $query->when($filters['search'] ?? false, fn($query, $search) =>
+    //   $query
+    //     ->where('title', 'like', '%' . $search . '%')
+    //     ->orwhere('body', 'like', '%' . $search . '%'));
 
     $query->when($filters['category'] ?? false, fn($query, $category) =>
       $query->whereHas('category', fn($query) =>
-        $query->where('slug', $category)));
+        $query->where('slug', $category)
+      )
+    );
 
     $query->when($filters['author'] ?? false, fn($query, $author) =>
       $query->whereHas('author', fn($query) =>
-        $query->where('username', $author)));
+        $query->where('username', $author)
+      )
+    );
 
     // Below is a very semantic method of
     // SELECT * FROM posts p
