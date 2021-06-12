@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use Illuminate\Http\Request;
 
 class RegisterController extends Controller
 {
@@ -55,7 +54,17 @@ class RegisterController extends Controller
 
     User::create($attributes);
 
-    return redirect('/');
+    /**
+     * We can create a quick message to inform user registration was successful.
+     * session()->flash()
+     * The session flash method saves a key/value that will only be stored for 1
+     * request.
+     *
+     * This statement can be shorthanded using the redirect()->with() method.
+     */
+    // session()->flash("success", "Your registration was successful!");
+
+    return redirect('/')->with("success", "Your registration was successful!");
 
   }
 
