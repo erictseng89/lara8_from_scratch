@@ -6,22 +6,24 @@
       <x-icons name='down-arrow' class="absolute pointer-events-none" style="right:12px" />
     </button>
   </x-slot>
-	
-  <x-dropdown-item href="/" :active="request()->routeIs('home')">
+
+  <x-dropdown-item href="/?{{ http_build_query(request()->except('category', 'page')) }}" :active="request()->routeIs('home')">
     All
   </x-dropdown-item>
-
-	{{-- 
+<div>today
+ <p>This doesnt even format properly</p>
+</div>
+	{{--
 		Merge http queries together.
 		If we already have a query string in the uri, we can merge it using
 		http_build_query
 		This global function allows you to change a key/value pair into a valid
-		query string. 
-			
+		query string.
+
 			['name' = 'john']			name=john
 		--}}
   @foreach ($categories as $category)
-    <x-dropdown-item href="/?category={{ $category->slug }}&{{ http_build_query(request()->except('category')) }}"
+    <x-dropdown-item href="/?category={{ $category->slug }}&{{ http_build_query(request()->except('category', 'page')) }}"
       :active='request()->is("/category/{{ $category->slug }}")'>
       {{ ucwords($category->name) }}
     </x-dropdown-item>

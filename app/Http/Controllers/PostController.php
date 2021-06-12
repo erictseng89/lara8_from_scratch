@@ -18,20 +18,30 @@ class PostController extends Controller
      * It is common convention to name and place the view files of a view controller in its own
      * folder.
      */
-    return view('post.index', [
-      // The 'filter()' method comes from scopeFilter() in the Post model and takes an array '$filter'.
-      // Original we allowed the method to simply read "request('search')", but now that it has been changed to an array, we need to pass through the variable as an array.
+    /** The 'filter()' method comes from scopeFilter() in the Post model and takes an array '$filter'.
+     * where() returns a collection, where 1st param matches 2nd param.
+     * The first param should be a column name, second param is a string
+     * first() returns the first collection that matches, which in the case of unique values,
+     * would be the only one.
+     * firstWhere() combines the where() and first() method.
+     */
 
-      'posts' => Post::latest()->filter(request(['search', 'category', 'author']))->get(),
-      /**
-       * Below 2 is exactly the same
-       * where() returns a collection, where 1st param matches 2nd param.
-       * The first param should be a column name, second param is a string
-       * first() returns the first collection that matches, which in the case of unique values,
-       * would be the only one.
-       * firstWhere() combines the where() and first() method.
-       */
-      // 'currentCategory' => Category::where('slug', request('category'))->first(),
+    // 'currentCategory' => Category::where('slug', request('category'))->first(),
+
+    /**
+     * paginate() is a function that can easily add pages to the webpage.
+     * If there is no parameter, then the default is 15 items per page.
+     * If 1 param, it must be an integer and dictates how many items per page.
+     *
+     * It'll show number of results, and create numbered links using the
+     * ->links() method
+     *
+     * simplePaginate() is a similar function, but it will only show Next/Previous buttons instead of numbered view.
+     */
+    return view('post.index', [
+      'posts' => Post::latest()
+        ->filter(request(['search', 'category', 'author']))
+        ->Paginate(6),
     ]);
   }
 
