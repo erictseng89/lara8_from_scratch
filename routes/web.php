@@ -1,6 +1,9 @@
 <?php
+namespace App;
 
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\SessionsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,6 +17,49 @@ use Illuminate\Support\Facades\Route;
 |
  */
 
+/**
+ * The get() method takes can action as the second parameter.
+ * The action can either be a function, or in this case, an array.
+ * The array's first index is the controller class, the second index is the name of the method called.
+ */
+Route::get('/', [PostController::class, 'index'])->name('home');
+Route::get('/post/{post:slug}', [PostController::class, 'show']);
+
+/**
+ * Registration Routing - Middleware
+ *
+ * We should not be able to route into the registration page once we are already
+ * logged in.
+ *
+ * We can use laravel middleware to inspect and filter http requests. They are
+ * located in the /app/http folders. There are global middleware that will run
+ * automatically. These include several web request middleware.
+ *
+ * There any many route middleware that can be called for routes including:
+ * auth, guest, password_confirm, verify and others.
+ *
+ * The 'guest' middleware can direct users to the registration/login screen or
+ * proceed further into the application depending if they are logged in or not.
+ *
+ */
+Route::get('/register', [RegisterController::class, 'create'])->middleware('guest');
+Route::post('/register', [RegisterController::class, 'store'])->middleware('guest');
+
+/**
+ * SessionsController
+ *
+ * This is a controller that will control user authentication sessions. It be
+ * responsible for the login and logout requests. This route will use the
+ * middleware 'auth' to make sure that the user was logged in.
+ */
+Route::get('/login', [SessionsController::class, 'create'])->middleware('guest');
+Route::post('/login', [SessionsController::class, 'store'])->middleware('guest');
+Route::post('/logout', [SessionsController::class, 'destroy'])->middleware('auth');
+
+// After changing category to use scopeFilter, the route is no longer needed.
+// Route::get('/category/{category:slug}', [PostController::class,
+// 'categoryPosts'])->name('category');
+
 /*
 Episode 38
 Once we create a controller, we can change really simplify the routing.
@@ -22,21 +68,6 @@ Route::get('/', function () {
 Original return statement
 })->name('home');
  */
-
-/*
-The get() method takes can action as the second parameter.
-The action can either be a function, or in this case, an array.
-The array's first index is the controller class, the second index is the name of the method called.
- */
-
-Route::get('/', [PostController::class, 'index'])->name('home');
-
-Route::get('/authors/{author:username}', [PostController::class, 'authorPosts'])->name('author');
-
-// After changing category to use scopeFilter, the route is no longer needed.
-// Route::get('/category/{category:slug}', [PostController::class, 'categoryPosts'])->name('category');
-
-Route::get('/post/{post:slug}', [PostController::class, 'show']);
 
 /*
 Episode 26
